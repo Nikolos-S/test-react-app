@@ -1,0 +1,21 @@
+.listGroup {
+  position: absolute;
+  width: calc(100% - 1.5rem);
+  background: #fff;
+  box-shadow: 5px 5px 5px 0 rgb(240 240 240 / 100%);
+  list-style: none;
+  padding: 0;
+
+  li {
+    padding: 0.3rem 1rem;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: #dee2e6;
+    }
+
+    &.activeColor {
+      background-color: #adb5bd;
+    }
+  }
+}

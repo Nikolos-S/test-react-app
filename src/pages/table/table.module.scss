@@ -1,0 +1,27 @@
+@media (max-width: 649px) {
+    .table thead {
+      display: none;
+    }
+    .table td  {
+      display: block;
+      border: none;
+    }
+  
+      .table td::before  {
+        content: attr(data-th) ": ";
+        color: #7a91aa;
+        font-weight: bold;
+    }
+  }
+  
+  @media (max-width: 449px) {
+    .table td  {
+      text-align: center;
+    }
+  
+      .table td::before  {
+        content: attr(data-th);
+        display: block;
+        font-size: 0.8rem;
+    }
+  }
