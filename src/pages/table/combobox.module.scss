@@ -19,3 +19,28 @@
     }
   }
 }
+
+.comboButton {
+  position: absolute;
+  transform: translateY(-50%); 
+  top: 50%;
+  right: 20px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background-size: cover;
+  z-index: 5;
+
+  &.active {
+    background-image: url('../../assets/img/arrow-down.png');
+  }
+
+  &.inActive {
+    background-image: url('../../assets/img/close.png');
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}

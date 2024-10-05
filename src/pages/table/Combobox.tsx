@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Form, InputGroup, Collapse } from 'react-bootstrap';
+import { Form, InputGroup, Collapse, Button } from 'react-bootstrap';
 import { useGetRocketsQuery, Rocket } from './services/rocketApi';
 import styles from './combobox.module.scss';
 
@@ -15,7 +15,7 @@ const Combobox: React.FC = () => {
 
   useEffect(() => {
     if (data) {
-      setListSearch(data)
+      setListSearch(data);
     }
   }, [data]);
 
@@ -52,6 +52,15 @@ const Combobox: React.FC = () => {
     }
   };
 
+  const exitCombobox = (): void => {
+    setActive(false)
+    setSelectedItem('');
+    setActiveItem(null);
+    data ? setListSearch(data) : setListSearch([]);
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+  };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'ArrowDown' && isActive) {
       setActiveIndex((prevIndex) =>
@@ -69,15 +78,18 @@ const Combobox: React.FC = () => {
         setActive(false);
       }
     } else if (e.key === 'Escape') {
-      if (inputRef.current) {
-        inputRef.current.blur();
-        if (!activeItem) {
-          setSelectedItem('');
-        }
-      }
-      setActive(false);
+      exitCombobox();
     }
   };
+
+  const clickCombobutton = () => {
+    if (isActive) {
+      exitCombobox();
+    } else {
+      setActive(true);
+      inputRef.current?.focus();
+    }
+  }
 
   return (
     <>
@@ -93,6 +105,11 @@ const Combobox: React.FC = () => {
             onFocus={() => setActive(true)}
           />
         </InputGroup>
+          <Button
+            variant="outline-light"
+            className={`${styles.comboButton} ${isActive ? styles.inActive : styles.active}`}
+            onClick={clickCombobutton}
+          />
         <Collapse in={isActive}>
         <ul className={styles.listGroup}>
           {listSearch.map(({ id, name }, i) => 
