@@ -43,7 +43,6 @@ const Combobox: React.FC = () => {
 
   const handleClick = (id: string) => {
     const currIndex = listSearch.findIndex((item) => item.id === id);
-    console.log(listSearch[currIndex]);
     if(currIndex !== -1) {
       setActiveIndex(currIndex);
 
@@ -54,17 +53,17 @@ const Combobox: React.FC = () => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === 'ArrowDown') {
+    if (e.key === 'ArrowDown' && isActive) {
       setActiveIndex((prevIndex) =>
         prevIndex < listSearch.length - 1 ? prevIndex + 1 : prevIndex
       );
-    } else if (e.key === 'ArrowUp') {
+    } else if (e.key === 'ArrowUp' && isActive) {
       setActiveIndex((prevIndex) =>
         prevIndex > 0 ? prevIndex - 1 : 0
       );
     } else if (e.key === 'Enter') {
-      if (activeIndex >= 0) {
-        e.preventDefault();
+      e.preventDefault();
+      if (activeIndex >= 0 && activeItem) {
         setActiveItem(listSearch[activeIndex]);
         setSelectedItem(listSearch[activeIndex].name)
         setActive(false);
@@ -72,6 +71,9 @@ const Combobox: React.FC = () => {
     } else if (e.key === 'Escape') {
       if (inputRef.current) {
         inputRef.current.blur();
+        if (!activeItem) {
+          setSelectedItem('');
+        }
       }
       setActive(false);
     }
